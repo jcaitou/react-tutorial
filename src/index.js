@@ -1,46 +1,33 @@
+//these are from node modules
 import React from 'react';
 import ReactDom from 'react-dom';
 
+//these are custom imports - need a relative filepath
 //CSS
 import './index.css'
 
-//setup variables
-const firstBook = {
-  img: 'https://images-na.ssl-images-amazon.com/images/I/8144Vic9C5L.jpg',
-  title: 'I Love You to the Moon and Back',
-  author: 'Amelia Hepworth'
-}
-const secondBook = {
-  img: 'https://images-na.ssl-images-amazon.com/images/I/8144Vic9C5L.jpg',
-  title: 'I Love You to the Moon and Back',
-  author: 'Amelia Hepworth'
-}
-// const author = 'Amelia Hepworth';
-// const title = 'I Love You to the Moon and Back';
-// const img = 'https://images-na.ssl-images-amazon.com/images/I/8144Vic9C5L.jpg';
+//named export - name needs to match exactly
+//js file - extension doesn't need to be explicit
+import {books} from './books'
+
+//default export: you can actually change the name "Book" to anything you want
+import Book from './Book'
+
+
 
 //capitalize name = React recognizes it as a component
 function BookList() {
   //returns JSX, not technically HTML
   return (
     <section className='booklist'>
-      <Book img={firstBook.img} title={firstBook.title} author={firstBook.author}/>
-      <Book  img={secondBook.img} title={secondBook.title} author={secondBook.author}/>
-      <Book />
-      <Book />
+      {books.map((book)=>{
+        const {img,title,author} = book;
+        //each child in list needs unique ID. otherwise there will be a error in console log
+        return <Book key={book.id} {...book}>       
+        </Book>
+      })}
     </section>
   );
 }
-
-const Book = (props) => {
-  console.log(props);
-  return (
-  <article className='book'>
-    <img src={props.img} alt='' />
-    <h1>{props.title}</h1>
-    <h4>{props.author}</h4>
-  </article>)
-}
-
 
 ReactDom.render(<BookList/>, document.getElementById('root'));
